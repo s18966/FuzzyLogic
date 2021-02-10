@@ -1,0 +1,31 @@
+Odleglosci zdefiniowane tak:
+blisko: [0-2]
+srednio:[1.5-4]
+daleko:[3-5]
+
+Predkosci zdefiniowani tak:
+wolno:[0-35]
+srednio:[30-65]
+szybko:[60-100]
+
+
+IF:
+	odleglosc=daleko THEN predkosc=szybko
+IF:
+	odleglosc=srednio THEN predkosc=srednio
+IF:
+	odleglosc=blisko THEN predkosc=wolno
+
+zbiory rozmyte zdefiniowane w petli w kodzie
+for x in odleglosc:
+	...
+
+zeby okreslic przynaleznosc, to  w aggregated = np.fmax(rule_daleko,np.fmax(rule_srednio,rule_blisko)) bierze sie maksymalne znaczenie z 3 zbiorow
+i potem odbywa sie defuzzifikacja 
+y = fuzz.defuzz(predkosc, aggregated, "mom")
+
+I zaleznosc predkosci od odleglosci pokazana na ostatnim wykresie.
+Widac ze od 5 do 4 predkosc jest  80
+od 4 do 3 ona zwalnia od 55
+od 3 do 2 idzie na predkosci 55
+i od 2 do 0 spowalnia do 0
